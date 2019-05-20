@@ -16,5 +16,20 @@ namespace GrandoLib
         {
             InitializeComponent();
         }
+
+        private void Search_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Add_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

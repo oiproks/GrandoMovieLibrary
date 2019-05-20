@@ -12,12 +12,12 @@ using System.Windows.Forms;
 
 namespace GrandoLib
 {
-    public partial class Form1 : Form
+    public partial class MainView : Form
     {
         SQLiteHelper helper;
         Logger logger;
 
-        public Form1()
+        public MainView()
         {
             InitializeComponent();
             helper = new SQLiteHelper();
