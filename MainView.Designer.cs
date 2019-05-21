@@ -43,7 +43,7 @@
             this.flpContainer.AutoScroll = true;
             this.flpContainer.Location = new System.Drawing.Point(12, 50);
             this.flpContainer.Name = "flpContainer";
-            this.flpContainer.Size = new System.Drawing.Size(522, 600);
+            this.flpContainer.Size = new System.Drawing.Size(522, 557);
             this.flpContainer.TabIndex = 4;
             // 
             // lblCounter
@@ -71,7 +71,7 @@
             // 
             this.pbDelete.BackColor = System.Drawing.Color.Transparent;
             this.pbDelete.Image = global::GrandoLib.Properties.Resources.delete;
-            this.pbDelete.Location = new System.Drawing.Point(400, 595);
+            this.pbDelete.Location = new System.Drawing.Point(12, 606);
             this.pbDelete.Name = "pbDelete";
             this.pbDelete.Size = new System.Drawing.Size(50, 50);
             this.pbDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -84,7 +84,7 @@
             // 
             this.pbAddNew.BackColor = System.Drawing.Color.Transparent;
             this.pbAddNew.Image = global::GrandoLib.Properties.Resources.plus1;
-            this.pbAddNew.Location = new System.Drawing.Point(461, 595);
+            this.pbAddNew.Location = new System.Drawing.Point(483, 606);
             this.pbAddNew.Name = "pbAddNew";
             this.pbAddNew.Size = new System.Drawing.Size(50, 50);
             this.pbAddNew.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -105,6 +105,7 @@
             this.Controls.Add(this.flpContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "MainView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Grando Movie Library";

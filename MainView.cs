@@ -47,8 +47,10 @@ namespace GrandoLib
             if (movies != null && flpContainer.Controls.Count != movies.Count)
             {
                 flpContainer.Controls.Clear();
+                string FirstLetter;
                 foreach (Movie movie in movies)
                 {
+                    //TODO: add block with first letter of movie to FLP
                     Label movieName = new Label
                     {
                         Text = movie.name,
@@ -83,23 +85,21 @@ namespace GrandoLib
 
         private void Add_Click(object sender, EventArgs e)
         {
-            txtSearch.Text = string.Empty;
+            Reset();
             AddNew addNew = new AddNew(this, helper);
             addNew.ShowDialog();
         }
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(this, "Deleting \"" + selectedMovie.name + "\".\r\nAre you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(this, "You are going to delete \"" + selectedMovie.name + "\" from the database.\r\nDo you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 helper.Delete(selectedMovie.id);
                 moviesUpdates = true;
                 MainView_Active(sender, e);
             }
-            selectedMovie = null;
-            pbDelete.Visible = false;
-            txtSearch.Text = string.Empty;
+            Reset();
         }
 
         private void MoreInfo(object sender, EventArgs e)
@@ -138,6 +138,13 @@ namespace GrandoLib
                 movies = helper.ReadDB(txtSearch.Text.ToString());
             else
                 movies = helper.ReadDB();
+        }
+
+        private void Reset()
+        {
+            selectedMovie = null;
+            pbDelete.Visible = false;
+            txtSearch.Text = string.Empty;
         }
     }
 }
