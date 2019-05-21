@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SQLite;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GrandoLib
@@ -90,6 +83,7 @@ namespace GrandoLib
 
         private void Add_Click(object sender, EventArgs e)
         {
+            txtSearch.Text = string.Empty;
             AddNew addNew = new AddNew(this, helper);
             addNew.ShowDialog();
         }
@@ -105,6 +99,7 @@ namespace GrandoLib
             }
             selectedMovie = null;
             pbDelete.Visible = false;
+            txtSearch.Text = string.Empty;
         }
 
         private void MoreInfo(object sender, EventArgs e)
