@@ -1,6 +1,6 @@
 # Grando Movie Library
 
-Personal project for a friend whow anted a customized library for his movies
+Personal project for a friend who wanted a customized library for his movies
 
 
 ## Features
