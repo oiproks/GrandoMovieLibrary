@@ -11,6 +11,7 @@ namespace GrandoLib
         List<Movie> movies;
         Movie selectedMovie;
         public bool moviesUpdates = false;
+        int letterBars = 0;
 
         public MainView()
         {
@@ -33,24 +34,49 @@ namespace GrandoLib
             if (movies != null) {
                 if (txtSearch.Text.ToString().Length <= 1)
                     if (movies.Count == 1)
-                        lblCounter.Text = "The library contains only " + movies.Count + " movie.";
+                        lblCounter.Text = "Il catalogo contiene solo " + movies.Count + " film.";
                     else
-                        lblCounter.Text = "The library contains " + movies.Count + " movies.";
+                        lblCounter.Text = "Il catalogo contiene " + movies.Count + " film.";
                 else
                     if (movies.Count == 1)
-                        lblCounter.Text = "The library contains only " + movies.Count + " movie with \"" + txtSearch.Text.ToString() + "\" in the title.";
+                        lblCounter.Text = "Il catalogo contiene solo " + movies.Count + " film con \"" + txtSearch.Text.ToString() + "\" nel titolo.";
                     else
-                        lblCounter.Text = "The library contains " + movies.Count + " movies with \"" + txtSearch.Text.ToString() + "\" in the title.";
+                        lblCounter.Text = "Il catalogo contiene " + movies.Count + " film con \"" + txtSearch.Text.ToString() + "\" nel titolo.";
             }
             else
                 lblCounter.Text = "";
-            if (movies != null && flpContainer.Controls.Count != movies.Count)
+            if (movies != null && flpContainer.Controls.Count != (movies.Count - letterBars))
             {
+                letterBars = 0;
                 flpContainer.Controls.Clear();
-                string FirstLetter;
+                string firstLetter = string.Empty;
                 foreach (Movie movie in movies)
                 {
                     //TODO: add block with first letter of movie to FLP
+                    if (firstLetter != movie.name.Substring(0, 1))
+                    {
+                        firstLetter = movie.name.Substring(0, 1).ToUpper();
+                        Button letter = new Button
+                        {
+                            BackColor = Color.Transparent,
+                            //Enabled = false,
+                            FlatStyle = FlatStyle.Flat,
+                            FlatAppearance = {
+                                BorderSize = 0,
+                                MouseOverBackColor = Color.Transparent,
+                                MouseDownBackColor = Color.Transparent
+                            },
+                            Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold),
+                            ForeColor = Color.FromKnownColor(KnownColor.Control),
+                            Image = Properties.Resources.line,
+                            Size = new Size(496, 25),
+                            Text = firstLetter,
+                            TextAlign = ContentAlignment.TopLeft
+                        };
+                        letterBars++;
+                        flpContainer.Controls.Add(letter);
+                    }
+
                     Label movieName = new Label
                     {
                         Text = movie.name,
@@ -92,7 +118,7 @@ namespace GrandoLib
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(this, "You are going to delete \"" + selectedMovie.name + "\" from the database.\r\nDo you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(this, "Stai cancellando \"" + selectedMovie.name + "\" dal catalogo.\r\nVuoi continuare?", "Attenzione", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 helper.Delete(selectedMovie.id);
@@ -104,7 +130,6 @@ namespace GrandoLib
 
         private void MoreInfo(object sender, EventArgs e)
         {
-            pbDelete.Visible = true;
             string movieID;
             if (sender is Panel)
                 movieID = ((Panel)sender).Tag.ToString();
@@ -115,7 +140,10 @@ namespace GrandoLib
             else
                 movieID = ((PictureBox)sender).Parent.Tag.ToString();
             string movieName = movies.Find(x => x.id == movieID).name;
+            lblDelete.Text = "Elimina \"" + movieName + "\"";
             selectedMovie = new Movie(movieID, movieName, null, null);
+            pbDelete.Visible = true;
+            lblDelete.Visible = true;
         }
 
         private void Search_Click(object sender, EventArgs e)
@@ -130,6 +158,8 @@ namespace GrandoLib
                 LoadMovies(false);
                 MainView_Active(sender, e);
             }
+            pbDelete.Visible = false;
+            lblDelete.Visible = false;
         }
 
         private void LoadMovies(bool search)

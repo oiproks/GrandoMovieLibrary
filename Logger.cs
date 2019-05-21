@@ -20,7 +20,7 @@ namespace GrandoLib
                 sw = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log.txt"), true);
                 sw.WriteLine(DateTime.Now.ToString() + ": Error in " + context + "\r\n\t" + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 if (context.Equals("Connection"))
-                    MessageBox.Show(null,"BingPaper requires Internet connection.", "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show(null,"Questa funzione richiede una connessione ad Internet.", "Errore",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 sw.Flush();
                 sw.Close();
             }

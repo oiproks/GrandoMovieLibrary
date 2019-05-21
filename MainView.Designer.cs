@@ -34,6 +34,8 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.pbDelete = new System.Windows.Forms.PictureBox();
             this.pbAddNew = new System.Windows.Forms.PictureBox();
+            this.lblDelete = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbDelete)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAddNew)).BeginInit();
             this.SuspendLayout();
@@ -92,12 +94,44 @@
             this.pbAddNew.TabStop = false;
             this.pbAddNew.Click += new System.EventHandler(this.Add_Click);
             // 
+            // lblDelete
+            // 
+            this.lblDelete.AutoSize = true;
+            this.lblDelete.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Bold);
+            this.lblDelete.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblDelete.Location = new System.Drawing.Point(66, 615);
+            this.lblDelete.MaximumSize = new System.Drawing.Size(270, 0);
+            this.lblDelete.MinimumSize = new System.Drawing.Size(270, 0);
+            this.lblDelete.Name = "lblDelete";
+            this.lblDelete.Size = new System.Drawing.Size(270, 17);
+            this.lblDelete.TabIndex = 9;
+            this.lblDelete.Visible = false;
+            this.lblDelete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(381, 622);
+            this.label1.MaximumSize = new System.Drawing.Size(101, 0);
+            this.label1.MinimumSize = new System.Drawing.Size(101, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 17);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Aggiungi film";
+            this.label1.Click += new System.EventHandler(this.Add_Click);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(545, 658);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblDelete);
             this.Controls.Add(this.pbDelete);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.pbAddNew);
@@ -124,6 +158,8 @@
         private System.Windows.Forms.Label lblCounter;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.PictureBox pbDelete;
+        private System.Windows.Forms.Label lblDelete;
+        private System.Windows.Forms.Label label1;
     }
 }
 

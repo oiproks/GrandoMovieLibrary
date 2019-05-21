@@ -2,6 +2,8 @@
 using System;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
@@ -25,33 +27,54 @@ namespace GrandoLib
         private void Search_Click(object sender, EventArgs e)
         {
             flpCovers.Controls.Clear();
-
+            flpCovers.BackgroundImage = null;
             string movieName = txtMovieName.Text.ToString().Replace(" ", "+");
 
             string url = "https://www.themoviedb.org/search?query=" + movieName + "&language=it-IT";
 
-            using (WebClient client = new WebClient())
+            try
             {
-                var document = new HtmlWeb().Load(url);
-                var urls = document.DocumentNode.Descendants("img")
-                                                .Select(ef => ef.GetAttributeValue("data-src", null))
-                                                .Where(s => !String.IsNullOrEmpty(s));
-                foreach (string imageUrl in urls)
+                using (WebClient client = new WebClient())
                 {
-                    PictureBox pictureBox = new PictureBox
-                    {
-                        Size = new Size(120, 175),
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        BackColor = Color.Transparent
-                    };
-                    pictureBox.Load(imageUrl);
-                    pictureBox.Click += PictureBox_Click;
-                    flpCovers.Controls.Add(pictureBox);
-                }
+                    var document = new HtmlWeb().Load(url);
+                    var urls = document.DocumentNode.Descendants("img")
+                                                    .Select(ef => ef.GetAttributeValue("data-src", null))
+                                                    .Where(s => !String.IsNullOrEmpty(s)).ToList();
+                    var names = document.DocumentNode.Descendants("img")
+                                                    .Select(ef => ef.GetAttributeValue("alt", null))
+                                                    .Where(s => !String.IsNullOrEmpty(s)).ToList();
+                    names.RemoveAt(0);
+                    names.RemoveAt(names.Count - 1);
+                    int index = 0;
+                    if (urls.Count() == 0)
+                        flpCovers.BackgroundImage = Properties.Resources.no_result;
+                    else
+                        foreach (string imageUrl in urls)
+                        {
+                            if (!imageUrl.Contains("w185_and_h278_bestv2"))
+                                continue;
+                            PictureBox pictureBox = new PictureBox
+                            {
+                                Size = new Size(120, 175),
+                                SizeMode = PictureBoxSizeMode.Zoom,
+                                BackColor = Color.Transparent,
+                                Tag = names[index]
+                            };
+                            index++;
+                            pictureBox.Load(imageUrl);
+                            Image image = new Bitmap(pictureBox.Image, new Size(120, 175));
+                            pictureBox.Image = image;
+                            pictureBox.Click += PictureBox_Click;
+                            flpCovers.Controls.Add(pictureBox);
+                        }
 
-                //Parallel.ForEach(urls, imageUrl => {
-                //    Populate_View(imageUrl);
-                //});
+                    //Parallel.ForEach(urls, imageUrl => {
+                    //    Populate_View(imageUrl);
+                    //});
+                }
+            } catch (Exception ex)
+            {
+                Logger.WriteLog("Connection", ex);
             }
         }
 
@@ -86,7 +109,8 @@ namespace GrandoLib
             pictureBox.BackColor = Color.Green;
             tempPictureBox = pictureBox;
             poster = pictureBox.Image;
-            btnAdd.Visible = true;
+            //btnAdd.Visible = true;
+            Add_Click(sender, e);
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -96,13 +120,13 @@ namespace GrandoLib
 
         private void Add_Click(object sender, EventArgs e)
         {
-            string movieName = ShowDialog(txtMovieName.Text.ToString());
+            string movieName = ShowDialog(tempPictureBox.Tag.ToString());
             if (string.IsNullOrEmpty(movieName))
                 return;
 
             bool result = helper.Insert(movieName, poster);
             if (!result)
-                MessageBox.Show(this, "Errore durante il salvataggio del film.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "Errore durante il salvataggio del film nel catalogo.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 mainView.moviesUpdates = true;
@@ -127,7 +151,7 @@ namespace GrandoLib
                 BackColor = Color.FromKnownColor(KnownColor.ControlDarkDark)
             };
             Label title = new Label() {
-                Text = "Confirm movie name",
+                Text = "Conferma il nome del film",
                 AutoSize = true,
                 Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold),
                 ForeColor = Color.FromKnownColor(KnownColor.Control),
@@ -138,7 +162,7 @@ namespace GrandoLib
             };
             Label description = new Label()
             {
-                Text = "Is movie name correct?",
+                Text = "Il nome è corretto?",
                 AutoSize = true,
                 ForeColor = Color.FromKnownColor(KnownColor.Control),
                 Location = new Point(12, 44),
@@ -163,7 +187,7 @@ namespace GrandoLib
             };
             Button cancel = new Button()
             {
-                Text = "Cancel",
+                Text = "Annulla",
                 BackColor = Color.FromKnownColor(KnownColor.Control),
                 Location = new Point(170, 116),
                 Size = new Size(75, 20),

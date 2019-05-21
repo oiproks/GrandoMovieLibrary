@@ -130,6 +130,8 @@
   <ItemGroup>
     <Content Include="icon.ico" />
     <Content Include="posters\gKGxZkx00NvLtRm2f0lDeLt3gZq.jpg" />
+    <None Include="Resources\no_result.png" />
+    <None Include="Resources\line.png" />
     <None Include="Resources\delete.png" />
     <None Include="Resources\plus1.png" />
     <None Include="Resources\plus.png" />

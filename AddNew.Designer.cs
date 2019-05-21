@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNew));
             this.txtMovieName = new System.Windows.Forms.TextBox();
-            this.flpCovers = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.flpCovers = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // txtMovieName
@@ -43,14 +43,6 @@
             this.txtMovieName.Size = new System.Drawing.Size(195, 20);
             this.txtMovieName.TabIndex = 0;
             // 
-            // flpCovers
-            // 
-            this.flpCovers.AutoScroll = true;
-            this.flpCovers.Location = new System.Drawing.Point(13, 39);
-            this.flpCovers.Name = "flpCovers";
-            this.flpCovers.Size = new System.Drawing.Size(275, 370);
-            this.flpCovers.TabIndex = 1;
-            // 
             // btnSearch
             // 
             this.btnSearch.BackColor = System.Drawing.SystemColors.Control;
@@ -59,11 +51,11 @@
             this.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnSearch.Location = new System.Drawing.Point(213, 12);
+            this.btnSearch.Location = new System.Drawing.Point(214, 12);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 20);
+            this.btnSearch.Size = new System.Drawing.Size(74, 20);
             this.btnSearch.TabIndex = 2;
-            this.btnSearch.Text = "Search";
+            this.btnSearch.Text = "Cerca";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.Search_Click);
@@ -79,7 +71,7 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 20);
             this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "Aggiungi";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Visible = false;
             this.btnAdd.Click += new System.EventHandler(this.Add_Click);
@@ -96,9 +88,18 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 20);
             this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Annulla";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.Cancel_Click);
+            // 
+            // flpCovers
+            // 
+            this.flpCovers.AutoScroll = true;
+            this.flpCovers.BackColor = System.Drawing.Color.Transparent;
+            this.flpCovers.Location = new System.Drawing.Point(13, 39);
+            this.flpCovers.Name = "flpCovers";
+            this.flpCovers.Size = new System.Drawing.Size(275, 370);
+            this.flpCovers.TabIndex = 1;
             // 
             // AddNew
             // 
