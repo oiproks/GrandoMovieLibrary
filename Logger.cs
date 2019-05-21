@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace GrandoLib
 {
-    class Logger
+    public class Logger
     {
         public Logger()
         {

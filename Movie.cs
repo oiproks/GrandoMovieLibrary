@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace GrandoLib
 {
-    class Movie
+    public class Movie
     {
+        public string id;
         public string name;
         public Image image;
+        public string synopsis;
 
         public Movie() { }
 
-        public Movie (string name, Image image)
+        public Movie (string id, string name, Image image, string synopsis)
         {
+            this.id = id;
             this.name = name;
             this.image = image;
+            this.synopsis = synopsis;
         }
     }
 }
