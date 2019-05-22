@@ -1,11 +1,13 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GrandoLib
@@ -37,10 +39,10 @@ namespace GrandoLib
                 using (WebClient client = new WebClient())
                 {
                     var document = new HtmlWeb().Load(url);
-                    var urls = document.DocumentNode.Descendants("img")
+                    List<string> urls = document.DocumentNode.Descendants("img")
                                                     .Select(ef => ef.GetAttributeValue("data-src", null))
                                                     .Where(s => !String.IsNullOrEmpty(s)).ToList();
-                    var names = document.DocumentNode.Descendants("img")
+                    List<string> names = document.DocumentNode.Descendants("img")
                                                     .Select(ef => ef.GetAttributeValue("alt", null))
                                                     .Where(s => !String.IsNullOrEmpty(s)).ToList();
                     names.RemoveAt(0);
@@ -49,28 +51,57 @@ namespace GrandoLib
                     if (urls.Count() == 0)
                         flpCovers.BackgroundImage = Properties.Resources.no_result;
                     else
-                        foreach (string imageUrl in urls)
+                    {
+                        //foreach (string imageUrl in urls)
+                        //{
+                        //    if (!imageUrl.Contains("w185_and_h278_bestv2"))
+                        //        continue;
+                        //    PictureBox pictureBox = new PictureBox
+                        //    {
+                        //        Size = new Size(120, 175),
+                        //        SizeMode = PictureBoxSizeMode.Zoom,
+                        //        BackColor = Color.Transparent,
+                        //        Tag = names[index]
+                        //    };
+                        //    index++;
+                        //    pictureBox.Load(imageUrl);
+                        //    Image image = new Bitmap(pictureBox.Image, new Size(120, 175));
+                        //    pictureBox.Image = image;
+                        //    pictureBox.Click += PictureBox_Click;
+                        //    flpCovers.Controls.Add(pictureBox);
+                        //}
+                        List<PictureBox> pictureBoxes = new List<PictureBox>();
+                        try
                         {
-                            if (!imageUrl.Contains("w185_and_h278_bestv2"))
-                                continue;
-                            PictureBox pictureBox = new PictureBox
+                            Parallel.ForEach(urls, imageUrl =>
                             {
-                                Size = new Size(120, 175),
-                                SizeMode = PictureBoxSizeMode.Zoom,
-                                BackColor = Color.Transparent,
-                                Tag = names[index]
-                            };
-                            index++;
-                            pictureBox.Load(imageUrl);
-                            Image image = new Bitmap(pictureBox.Image, new Size(120, 175));
-                            pictureBox.Image = image;
-                            pictureBox.Click += PictureBox_Click;
-                            flpCovers.Controls.Add(pictureBox);
+                                if (!imageUrl.Contains("w185_and_h278_bestv2"))
+                                    return;
+                                index = urls.IndexOf(imageUrl);
+                                PictureBox pictureBox = new PictureBox
+                                {
+                                    Size = new Size(120, 175),
+                                    SizeMode = PictureBoxSizeMode.Zoom,
+                                    BackColor = Color.Transparent,
+                                    Tag = names[index]
+                                };
+                                pictureBox.Load(imageUrl);
+                                Image image = new Bitmap(pictureBox.Image, new Size(120, 175));
+                                pictureBox.Image = image;
+                                pictureBox.Click += PictureBox_Click;
+                                pictureBoxes.Add(pictureBox);
+                            });
                         }
-
-                    //Parallel.ForEach(urls, imageUrl => {
-                    //    Populate_View(imageUrl);
-                    //});
+                        catch (Exception ex)
+                        {
+                            Logger.WriteLog("Parallel Work", ex);
+                        }
+                        finally
+                        {
+                            foreach (PictureBox pictureBox in pictureBoxes)
+                                flpCovers.Controls.Add(pictureBox);
+                        }
+                    }
                 }
             } catch (Exception ex)
             {
